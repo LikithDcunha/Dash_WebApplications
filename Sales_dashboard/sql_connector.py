@@ -59,8 +59,8 @@ def transform_data_tocsv(tables_dict, output_folder='./'):
 
 
 
-for result in cursor.fetchall():
-    print(result)
+# for result in cursor.fetchall():
+#     print(result)
 
 
 
