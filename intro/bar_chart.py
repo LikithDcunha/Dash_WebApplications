@@ -60,7 +60,7 @@ def update_graph(option_selected):
         x='State',
         y='Pct of Colonies Impacted',
         hover_data= ['State', 'Pct of Colonies Impacted'],
-        labels={'Pct of Colonies Impacted': '% of Bee Colonie'}, 
+        labels={'Pct of Colonies Impacted': '% of Bee Colony'}, 
         template='plotly_dark'
     )
 

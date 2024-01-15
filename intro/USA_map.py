@@ -62,7 +62,7 @@ def update_graph(option_selected):
         color='Pct of Colonies Impacted',
         hover_data= ['State', 'Pct of Colonies Impacted'],
         color_continuous_scale=px.colors.sequential.YlOrRd,
-        labels={'Pct of Colonies Impacted': '% of Bee Colonie'}, 
+        labels={'Pct of Colonies Impacted': '% of Bee Colony'}, 
         template='plotly_dark'
     )
 

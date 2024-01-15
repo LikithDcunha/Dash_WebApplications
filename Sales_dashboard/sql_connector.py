@@ -51,13 +51,6 @@ def transform_data_tocsv(dfs, output_folder='./'):
 transform_data_tocsv(dfs,output_folder='Sales_dashboard/sales_extracted_data')
 
 
-def transform_data_tocsv(tables_dict, output_folder='./'):
-    for table_name, table_data in tables_dict.items():
-        csv_file_path = f"{output_folder}/{table_name}.csv"
-        table_data.to_csv(csv_file_path, index=False)
-        print(f'Table {table_name} written to {csv_file_path}')
-
-
 
 # for result in cursor.fetchall():
 #     print(result)
