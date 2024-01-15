@@ -5,6 +5,8 @@ import yaml
 
 
 
+#--- Loading credentials 
+
 with open("build/creds.yml") as f:
     cred_content = f.read()
 
@@ -23,34 +25,56 @@ cnx = mysql.connector.connect(
 cursor = cnx.cursor()
 
 #Testing connection with a query
-query = """ 
-            SELECT *
-            from customers
-            Order by 1;
 
-        """
+cursor.execute('Show Tables;')
+print(cursor.fetchall())
 
-cursor.execute(query)
-temp_result = cursor.fetchall()
-df = pd.DataFrame(temp_result, columns=[row[0] for row in cursor.description])
-print(df.head(10))
+tables = ['customers', 'date', 'markets', 'products', 'transactions']
+
+
+dfs = {}
+
+for table in tables:
+    cursor.execute(f'SELECT * FROM {table}')
+    temp_result = cursor.fetchall()
+    df = pd.DataFrame(temp_result, columns=[col[0] for col in cursor.description])
+    # storing the df in the dictionary with dataframe as value, table name as key
+    dfs[table] = df
+
+
+def transform_data_tocsv(dfs, output_folder='./'):
+    for table_name, table_data in dfs.items():
+        csv_file_path = f"{output_folder}/{table_name}.csv"
+        table_data.to_csv(csv_file_path,index=False)
+        print(f'table {table_name} written to {csv_file_path}')
+
+transform_data_tocsv(dfs,output_folder='Sales_dashboard/sales_extracted_data')
+
+
+def transform_data_tocsv(tables_dict, output_folder='./'):
+    for table_name, table_data in tables_dict.items():
+        csv_file_path = f"{output_folder}/{table_name}.csv"
+        table_data.to_csv(csv_file_path, index=False)
+        print(f'Table {table_name} written to {csv_file_path}')
+
+
 
 for result in cursor.fetchall():
     print(result)
 
 
 
-
 # Input queries for DA
 
-try:
-    cursor.execute(query)
-    results = cursor.fetchall()
-    df = pd.DataFrame(results, columns=[column[0] for column in cursor.description])
-    print(df)
-except mysql.connector.Error as err:
-    # Handle Errors
-    print("Error: {}".format(err))
+# query = ''
+# try:
+#     cursor.execute(query)
+#     results = cursor.fetchall()
+#     df = pd.DataFrame(results, columns=[column[0] for column in cursor.description])
+#     print(df)
+# except mysql.connector.Error as err:
+#     # Handle Errors
+#     print("Error: {}".format(err))
 
 
 # Close 
